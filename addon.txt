@@ -1,0 +1,9 @@
+"AddonInfo"
+{
+	"name"            "GDR"
+	"version"         "1.0"
+	"up_date"         "00/00/00"
+	"author_name"     "nahu"
+	"author_email"    ""
+	"author_url"      ""
+}

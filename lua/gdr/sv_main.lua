@@ -27,6 +27,8 @@ local function ParseMessages(code, body, header)
         net.WriteString(sAuthor)
         net.WriteString(sContent)
         net.Broadcast()
+
+        MsgC(Color(114, 137, 218), "["..sAuthor.."]: ", Color(255, 255, 255), sContent.."\n")
     end
 
     sLastErrorReason = ""

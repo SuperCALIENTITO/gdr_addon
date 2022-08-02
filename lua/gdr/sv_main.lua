@@ -59,8 +59,26 @@ local function SendMessage(sID, sName, sChatMessage)
     HTTP(tHTTPRequest)
 end
 
-local function OnPlayerSay(Ply, sChatMessage, bTeam, bDead)
-    SendMessage(Ply:SteamID64(), Ply:Nick(), sChatMessage)
+hook.Add("PlayerSay", "gdr_chatreader", function(ply, text)
+    SendMessage(ply:SteamID64(), ply:Nick(), text)
+end)
+
+local function SendMessageHook(img, name, text)
+    local tHTTPRequest = {
+        url = tGDRConfig.Endpoint.."/sendmessagehook",
+        method = "POST",
+        failed = OnHTTPFail,
+        body = util.TableToJSON({ img, name, text }),
+        type = "application/json"
+    }
+
+    HTTP(tHTTPRequest)
 end
 
-hook.Add("PlayerSay", "gdr_chatreader", OnPlayerSay)
+hook.Add("GDR_sendMessage", "gdr_sendmessagehook", function(img, name, text)
+    if not img then return end
+    if not name then return end
+    if not text then return end
+
+    SendMessageHook(img, name, text)
+end)
